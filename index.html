@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机进化史：从算盘到量子计算</title>
+    <meta name="description" content="探索计算机从1600年代到现代的发展历程，了解关键技术突破和里程碑事件，参与互动测验和小游戏。">
+    <meta name="keywords" content="计算机历史,科技史,互动时间线,计算机发展,科技科普">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#34D399',
+                        accent: '#F97316',
+                        dark: {
+                            bg: '#1E293B',
+                            card: '#334155',
+                            text: '#F8FAFC'
+                        },
+                        light: {
+                            bg: '#F8FAFC',
+                            card: '#FFFFFF',
+                            text: '#1E293B'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .typing-animation {
+                animation: typing 3.5s steps(40, end), blink .75s step-end infinite;
+            }
+            .timeline-line {
+                height: calc(100% - 32px);
+                top: 32px;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .circuit-pattern {
+                background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23165DFF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+            .binary-pattern {
+                background-image: repeating-linear-gradient(90deg, #165DFF10, #165DFF10 10px, transparent 10px, transparent 20px);
+            }
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: currentColor }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-inter bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text transition-colors duration-300 circuit-pattern min-h-screen">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-light-bg/90 dark:bg-dark-bg/90 backdrop-blur-md shadow-sm transition-all duration-300">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa fa-microchip text-primary text-2xl"></i>
+                <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">计算进化史</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#home" class="hover:text-primary transition-colors duration-200">首页</a>
+                <a href="#timeline" class="hover:text-primary transition-colors duration-200">时间轴</a>
+                <a href="#inventors" class="hover:text-primary transition-colors duration-200">发明家</a>
+                <a href="#quiz" class="hover:text-primary transition-colors duration-200">知识测验</a>
+                <a href="#future" class="hover:text-primary transition-colors duration-200">未来展望</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors duration-200">
+                    <i class="fa fa-moon-o dark:hidden text-lg"></i>
+                    <i class="fa fa-sun-o hidden dark:block text-lg"></i>
+                </button>
+                <button id="menu-toggle" class="md:hidden p-2 rounded-full hover:bg-primary/10 transition-colors duration-200">
+                    <i class="fa fa-bars text-lg"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-light-bg dark:bg-dark-bg shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-3 flex flex-col gap-3">
+                <a href="#home" class="py-2 hover:text-primary transition-colors duration-200">首页</a>
+                <a href="#timeline" class="py-2 hover:text-primary transition-colors duration-200">时间轴</a>
+                <a href="#inventors" class="py-2 hover:text-primary transition-colors duration-200">发明家</a>
+                <a href="#quiz" class="py-2 hover:text-primary transition-colors duration-200">知识测验</a>
+                <a href="#future" class="py-2 hover:text-primary transition-colors duration-200">未来展望</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 首页/标题区 -->
+        <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                    <div class="md:w-1/2 space-y-6">
+                        <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight">
+                            <span class="block">从算盘到AI：</span>
+                            <span class="relative inline-block">
+                                <span class="typing-animation overflow-hidden border-r-2 whitespace-nowrap">计算机的进化史诗</span>
+                            </span>
+                        </h1>
+                        <p class="text-lg text-light-text/80 dark:text-dark-text/80">
+                            探索计算机技术从17世纪到现代的革命性发展历程，见证人类如何从机械计算迈向人工智能时代。
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#timeline" class="px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg shadow-lg shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
+                                <i class="fa fa-history mr-2"></i>浏览时间轴
+                            </a>
+                            <a href="#quiz" class="px-6 py-3 bg-light-card dark:bg-dark-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-300 transform hover:-translate-y-1">
+                                <i class="fa fa-question-circle mr-2"></i>参与测验
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 relative">
+                        <div class="relative h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-2xl">
+                            <canvas id="computingPowerChart" class="w-full h-full"></canvas>
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 bg-accent text-white px-4 py-2 rounded-lg shadow-lg float-animation">
+                            <i class="fa fa-line-chart mr-2"></i>算力增长曲线
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 分隔符 -->
+        <div class="h-12 binary-pattern my-8"></div>
+        
+        <!-- 时间轴核心区 -->
+        <section id="timeline" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">计算机发展时间轴</h2>
+                    <p class="text-light-text/70 dark:text-dark-text/70 max-w-2xl mx-auto">
+                        点击时间节点，探索计算机技术发展历程中的关键里程碑和突破性发明
+                    </p>
+                </div>
+                
+                <!-- 时间轴导航 -->
+                <div class="flex justify-center mb-12 overflow-x-auto scrollbar-hide">
+                    <div class="flex space-x-2 md:space-x-6 pb-2">
+                        <button class="timeline-nav-btn active px-4 py-2 rounded-full bg-primary text-white shadow-lg" data-era="mechanical">
+                            机械计算时代
+                        </button>
+                        <button class="timeline-nav-btn px-4 py-2 rounded-full bg-light-card dark:bg-dark-card shadow-md hover:shadow-lg transition-all duration-300" data-era="vacuum">
+                            电子管时代
+                        </button>
+                        <button class="timeline-nav-btn px-4 py-2 rounded-full bg-light-card dark:bg-dark-card shadow-md hover:shadow-lg transition-all duration-300" data-era="transistor">
+                            晶体管时代
+                        </button>
+                        <button class="timeline-nav-btn px-4 py-2 rounded-full bg-light-card dark:bg-dark-card shadow-md hover:shadow-lg transition-all duration-300" data-era="ic">
+                            集成电路时代
+                        </button>
+                        <button class="timeline-nav-btn px-4 py-2 rounded-full bg-light-card dark:bg-dark-card shadow-md hover:shadow-lg transition-all duration-300" data-era="modern">
+                            现代计算机
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 时间轴内容 -->
+                <div class="relative">
+                    <!-- 时间轴线 -->
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-primary via-secondary to-accent h-full rounded-full"></div>
+                    
+                    <!-- 机械计算时代 -->
+                    <div id="mechanical-era" class="timeline-era">
+                        <div class="space-y-16">
+                            <!-- 算盘 -->
+                            <div class="timeline-item" data-year="1623">
+                                <div class="md:flex md:items-center">
+                                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                                        <div class="bg-light-card dark:bg-dark-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                            <h3 class="text-xl font-semibold mb-2">算盘</h3>
+                                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                                算盘是最早的计算工具之一，其历史可追溯至公元前2700年的美索不达米亚。它通过珠子在木框上的移动进行计算，是现代计算机的雏形。
+                                            </p>
+                                            <button class="view-details-btn text-primary hover:text-primary/80 transition-colors duration-200" data-id="abacus">
+                                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-12 flex justify-center order-1 md:order-2">
+                                        <div class="relative">
+                                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20 z-10 cursor-pointer timeline-dot" data-id="abacus">
+                                                1623
+                                            </div>
+                                            <div class="hidden md:block absolute top-1/2 left-1/2 w-20 h-20 rounded-full bg-primary/20 -translate-x-1/2 -translate-y-1/2 animate-ping"></div>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- 差分机 -->
+                            <div class="timeline-item" data-year="1822">
+                                <div class="md:flex md:items-center">
+                                    <div class="md:w-1/2 md:pr-12 order-2 md:order-1 hidden md:block"></div>
+                                    <div class="md:w-12 flex justify-center order-1 md:order-2">
+                                        <div class="relative">
+                                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20 z-10 cursor-pointer timeline-dot" data-id="difference-engine">
+                                                1822
+                                            </div>
+                                            <div class="hidden md:block absolute top-1/2 left-1/2 w-20 h-20 rounded-full bg-primary/20 -translate-x-1/2 -translate-y-1/2 animate-ping"></div>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-1/2 md:pl-12 order-3 md:order-3">
+                                        <div class="bg-light-card dark:bg-dark-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                            <h3 class="text-xl font-semibold mb-2">差分机</h3>
+                                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                                由查尔斯·巴贝奇设计的机械计算设备，能够自动计算多项式函数。尽管由于技术限制未能完全建成，但它是现代计算机的重要先驱。
+                                            </p>
+                                            <button class="view-details-btn text-primary hover:text-primary/80 transition-colors duration-200" data-id="difference-engine">
+                                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- ENIAC -->
+                            <div class="timeline-item" data-year="1946">
+                                <div class="md:flex md:items-center">
+                                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                                        <div class="bg-light-card dark:bg-dark-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                            <h3 class="text-xl font-semibold mb-2">ENIAC</h3>
+                                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                                世界上第一台通用电子计算机，重达30吨，使用了18,000个电子管，每秒能执行约5,000次加法运算。它的诞生标志着计算机从机械时代迈入电子时代。
+                                            </p>
+                                            <button class="view-details-btn text-primary hover:text-primary/80 transition-colors duration-200" data-id="eniac">
+                                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-12 flex justify-center order-1 md:order-2">
+                                        <div class="relative">
+                                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20 z-10 cursor-pointer timeline-dot" data-id="eniac">
+                                                1946
+                                            </div>
+                                            <div class="hidden md:block absolute top-1/2 left-1/2 w-20 h-20 rounded-full bg-primary/20 -translate-x-1/2 -translate-y-1/2 animate-ping"></div>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 电子管时代 -->
+                    <div id="vacuum-era" class="timeline-era hidden">
+                        <!-- 电子管时代内容 -->
+                        <div class="space-y-16">
+                            <!-- UNIVAC -->
+                            <div class="timeline-item" data-year="1951">
+                                <div class="md:flex md:items-center">
+                                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                                        <div class="bg-light-card dark:bg-dark-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                            <h3 class="text-xl font-semibold mb-2">UNIVAC I</h3>
+                                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                                第一台商用电子计算机，用于处理商业数据和科学计算。它的成功应用标志着计算机从实验室走向了市场。
+                                            </p>
+                                            <button class="view-details-btn text-primary hover:text-primary/80 transition-colors duration-200" data-id="univac">
+                                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-12 flex justify-center order-1 md:order-2">
+                                        <div class="relative">
+                                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20 z-10 cursor-pointer timeline-dot" data-id="univac">
+                                                1951
+                                            </div>
+                                            <div class="hidden md:block absolute top-1/2 left-1/2 w-20 h-20 rounded-full bg-primary/20 -translate-x-1/2 -translate-y-1/2 animate-ping"></div>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- FORTRAN -->
+                            <div class="timeline-item" data-year="1957">
+                                <div class="md:flex md:items-center">
+                                    <div class="md:w-1/2 md:pr-12 order-2 md:order-1 hidden md:block"></div>
+                                    <div class="md:w-12 flex justify-center order-1 md:order-2">
+                                        <div class="relative">
+                                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20 z-10 cursor-pointer timeline-dot" data-id="fortran">
+                                                1957
+                                            </div>
+                                            <div class="hidden md:block absolute top-1/2 left-1/2 w-20 h-20 rounded-full bg-primary/20 -translate-x-1/2 -translate-y-1/2 animate-ping"></div>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-1/2 md:pl-12 order-3 md:order-3">
+                                        <div class="bg-light-card dark:bg-dark-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                            <h3 class="text-xl font-semibold mb-2">FORTRAN编程语言</h3>
+                                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                                第一种高级程序设计语言，由IBM开发。它大大简化了计算机编程，使得科学家和工程师可以更高效地编写程序。
+                                            </p>
+                                            <button class="view-details-btn text-primary hover:text-primary/80 transition-colors duration-200" data-id="fortran">
+                                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 晶体管时代 -->
+                    <div id="transistor-era" class="timeline-era hidden">
+                        <!-- 晶体管时代内容 -->
+                    </div>
+                    
+                    <!-- 集成电路时代 -->
+                    <div id="ic-era" class="timeline-era hidden">
+                        <!-- 集成电路时代内容 -->
+                    </div>
+                    
+                    <!-- 现代计算机 -->
+                    <div id="modern-era" class="timeline-era hidden">
+                        <!-- 现代计算机时代内容 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 分隔符 -->
+        <div class="h-12 binary-pattern my-8"></div>
+        
+        <!-- 发明家档案库 -->
+        <section id="inventors" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">计算机科学先驱</h2>
+                    <p class="text-light-text/70 dark:text-dark-text/70 max-w-2xl mx-auto">
+                        探索那些改变了世界的计算机科学家和发明家的故事
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 图灵 -->
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://picsum.photos/seed/turing/800/600" alt="艾伦·图灵照片" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-xl font-bold">艾伦·图灵</h3>
+                                <p class="text-white/80">1912-1954</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                英国数学家、逻辑学家，被誉为计算机科学之父。他提出了图灵机的概念，为现代计算机奠定了理论基础。
+                            </p>
+                            <button class="text-primary hover:text-primary/80 transition-colors duration-200 inventor-details-btn" data-id="turing">
+                                了解更多 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 冯·诺依曼 -->
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://picsum.photos/seed/vonneumann/800/600" alt="约翰·冯·诺依曼照片" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-xl font-bold">约翰·冯·诺依曼</h3>
+                                <p class="text-white/80">1903-1957</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                美籍匈牙利数学家，提出了"存储程序"的概念，奠定了现代计算机体系结构的基础，被称为冯·诺依曼结构。
+                            </p>
+                            <button class="text-primary hover:text-primary/80 transition-colors duration-200 inventor-details-btn" data-id="vonneumann">
+                                了解更多 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 格蕾丝·霍普 -->
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://picsum.photos/seed/hopler/800/600" alt="格蕾丝·霍普照片" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-xl font-bold">格蕾丝·霍普</h3>
+                                <p class="text-white/80">1906-1992</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                美国海军少将、计算机科学家，发明了第一个编译器A-0系统，并推动了COBOL编程语言的发展，是计算机编程领域的先驱。
+                            </p>
+                            <button class="text-primary hover:text-primary/80 transition-colors duration-200 inventor-details-btn" data-id="hopper">
+                                了解更多 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <button class="px-6 py-3 bg-light-card dark:bg-dark-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-300">
+                        查看更多先驱 <i class="fa fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 趣味互动区 -->
+        <section id="interactive" class="py-16 bg-primary/5 dark:bg-primary/10">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">趣味互动</h2>
+                    <p class="text-light-text/70 dark:text-dark-text/70 max-w-2xl mx-auto">
+                        通过互动游戏和测验，加深对计算机历史的理解
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- 知识测验 -->
+                    <div id="quiz" class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-48 md:h-64 overflow-hidden">
+                            <img src="https://picsum.photos/seed/computerquiz/800/600" alt="计算机知识测验" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-xl md:text-2xl font-bold">计算机知识测验</h3>
+                                <p class="text-white/80">测试你对计算机历史的了解程度</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div id="quiz-container">
+                                <div id="quiz-questions" class="space-y-6">
+                                    <!-- 问题1 -->
+                                    <div class="quiz-question">
+                                        <h4 class="font-semibold mb-3">1. 世界上第一台电子计算机是什么？</h4>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors duration-200">
+                                                <input type="radio" name="q1" value="A" class="mr-3">
+                                                <span>ENIAC</span>
+                                            </label>
+                                            <label class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors duration-200">
+                                                <input type="radio" name="q1" value="B" class="mr-3">
+                                                <span>UNIVAC</span>
+                                            </label>
+                                            <label class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors duration-200">
+                                                <input type="radio" name="q1" value="C" class="mr-3">
+                                                <span>EDVAC</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 问题2 -->
+                                    <div class="quiz-question">
+                                        <h4 class="font-semibold mb-3">2. 谁被称为"计算机科学之父"？</h4>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors duration-200">
+                                                <input type="radio" name="q2" value="A" class="mr-3">
+                                                <span>艾伦·图灵</span>
+                                            </label>
+                                            <label class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors duration-200">
+                                                <input type="radio" name="q2" value="B" class="mr-3">
+                                                <span>约翰·冯·诺依曼</span>
+                                            </label>
+                                            <label class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors duration-200">
+                                                <input type="radio" name="q2" value="C" class="mr-3">
+                                                <span>查尔斯·巴贝奇</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <button id="submit-quiz" class="mt-4 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg shadow-lg shadow-primary/20 transition-all duration-300">
+                                        提交答案
+                                    </button>
+                                </div>
+                                
+                                <div id="quiz-results" class="hidden">
+                                    <h4 class="text-xl font-bold mb-4">测验结果</h4>
+                                    <p class="mb-4">你的得分：<span id="quiz-score" class="font-bold">0</span>/2</p>
+                                    <div id="quiz-explanations" class="space-y-4">
+                                        <div>
+                                            <p class="font-semibold">1. 正确答案：A. ENIAC</p>
+                                            <p class="text-sm text-light-text/70 dark:text-dark-text/70">ENIAC（电子数字积分计算机）是世界上第一台通用电子计算机，于1946年问世。</p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold">2. 正确答案：A. 艾伦·图灵</p>
+                                            <p class="text-sm text-light-text/70 dark:text-dark-text/70">艾伦·图灵被称为计算机科学之父，他提出的图灵机模型为现代计算机奠定了理论基础。</p>
+                                        </div>
+                                    </div>
+                                    <button id="reset-quiz" class="mt-4 px-6 py-3 bg-light-card dark:bg-dark-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-300">
+                                        重新测验
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 硬件进化对比 -->
+                    <div id="hardware-comparison" class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-48 md:h-64 overflow-hidden">
+                            <img src="https://picsum.photos/seed/computerhardware/800/600" alt="计算机硬件进化对比" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-xl md:text-2xl font-bold">硬件进化对比</h3>
+                                <p class="text-white/80">不同年代计算机的性能与体积对比</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full">
+                                        <thead>
+                                            <tr class="bg-light-bg dark:bg-dark-bg">
+                                                <th class="py-3 px-4 text-left font-semibold">年代</th>
+                                                <th class="py-3 px-4 text-left font-semibold">代表机型</th>
+                                                <th class="py-3 px-4 text-left font-semibold">处理器</th>
+                                                <th class="py-3 px-4 text-left font-semibold">内存</th>
+                                                <th class="py-3 px-4 text-left font-semibold">体积</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                            <tr class="hover:bg-primary/5 transition-colors duration-200">
+                                                <td class="py-3 px-4">1940s</td>
+                                                <td class="py-3 px-4">ENIAC</td>
+                                                <td class="py-3 px-4">电子管</td>
+                                                <td class="py-3 px-4">20字节</td>
+                                                <td class="py-3 px-4">30立方米</td>
+                                            </tr>
+                                            <tr class="hover:bg-primary/5 transition-colors duration-200">
+                                                <td class="py-3 px-4">1960s</td>
+                                                <td class="py-3 px-4">IBM System/360</td>
+                                                <td class="py-3 px-4">晶体管</td>
+                                                <td class="py-3 px-4">512KB</td>
+                                                <td class="py-3 px-4">2立方米</td>
+                                            </tr>
+                                            <tr class="hover:bg-primary/5 transition-colors duration-200">
+                                                <td class="py-3 px-4">1980s</td>
+                                                <td class="py-3 px-4">IBM PC</td>
+                                                <td class="py-3 px-4">Intel 8088</td>
+                                                <td class="py-3 px-4">640KB</td>
+                                                <td class="py-3 px-4">0.05立方米</td>
+                                            </tr>
+                                            <tr class="hover:bg-primary/5 transition-colors duration-200">
+                                                <td class="py-3 px-4">2000s</td>
+                                                <td class="py-3 px-4">MacBook Pro</td>
+                                                <td class="py-3 px-4">Intel Core 2 Duo</td>
+                                                <td class="py-3 px-4">4GB</td>
+                                                <td class="py-3 px-4">0.003立方米</td>
+                                            </tr>
+                                            <tr class="hover:bg-primary/5 transition-colors duration-200">
+                                                <td class="py-3 px-4">2020s</td>
+                                                <td class="py-3 px-4">MacBook Air M1</td>
+                                                <td class="py-3 px-4">Apple M1</td>
+                                                <td class="py-3 px-4">16GB</td>
+                                                <td class="py-3 px-4">0.002立方米</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="flex justify-center">
+                                    <button class="px-6 py-3 bg-light-card dark:bg-dark-card hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-300">
+                                        查看更多对比 <i class="fa fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 未来展望 -->
+        <section id="future" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">未来展望</h2>
+                    <p class="text-light-text/70 dark:text-dark-text/70 max-w-2xl mx-auto">
+                        探索计算机技术的前沿领域和未来发展方向
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 量子计算 -->
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-40 overflow-hidden">
+                            <div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                                <i class="fa fa-quantum-computing text-6xl text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3">量子计算</h3>
+                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                量子计算机利用量子力学现象进行计算，能够解决传统计算机难以处理的复杂问题，如密码学、药物研发和人工智能。
+                            </p>
+                            <a href="#" class="text-primary hover:text-primary/80 transition-colors duration-200">
+                                了解更多 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 神经形态计算 -->
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-40 overflow-hidden">
+                            <div class="absolute inset-0 bg-secondary/20 flex items-center justify-center">
+                                <i class="fa fa-brain text-6xl text-secondary"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3">神经形态计算</h3>
+                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                神经形态芯片模仿人脑的结构和功能，能够更高效地处理感知和学习任务，为人工智能开辟新的可能性。
+                            </p>
+                            <a href="#" class="text-primary hover:text-primary/80 transition-colors duration-200">
+                                了解更多 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 边缘计算 -->
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative h-40 overflow-hidden">
+                            <div class="absolute inset-0 bg-accent/20 flex items-center justify-center">
+                                <i class="fa fa-cloud text-6xl text-accent"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3">边缘计算</h3>
+                            <p class="text-light-text/80 dark:text-dark-text/80 mb-4">
+                                边缘计算将计算和数据存储靠近数据源，减少延迟并提高效率，是物联网和5G技术的重要支撑。
+                            </p>
+                            <a href="#" class="text-primary hover:text-primary/80 transition-colors duration-200">
+                                了解更多 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 反馈表单 -->
+        <section class="py-16 bg-primary/5 dark:bg-primary/10">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto bg-light-card dark:bg-dark-card rounded-xl shadow-lg p-8 md:p-12">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6">分享你的想法</h2>
+                    <p class="text-light-text/70 dark:text-dark-text/70 mb-8">
+                        对这个科普网页有什么建议或发现了什么错误？请告诉我们！
+                    </p>
+                    
+                    <form id="feedback-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-2">姓名</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200 bg-light-bg dark:bg-dark-bg">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2">邮箱</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200 bg-light-bg dark:bg-dark-bg">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium mb-2">主题</label>
+                            <select id="subject" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200 bg-light-bg dark:bg-dark-bg">
+                                <option value="suggestion">建议</option>
+                                <option value="error">纠错</option>
+                                <option value="question">问题</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium mb-2">消息</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200 bg-light-bg dark:bg-dark-bg"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg shadow-lg shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
+                            提交 <i class="fa fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="bg-light-card dark:bg-dark-card py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa fa-microchip text-primary text-2xl"></i>
+                        <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">计算进化史</span>
+                    </div>
+                    <p class="text-light-text/70 dark:text-dark-text/70 mb-4">
+                        探索计算机从机械时代到人工智能的发展历程，了解科技如何改变世界。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">首页</a></li>
+                        <li><a href="#timeline" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">时间轴</a></li>
+                        <li><a href="#inventors" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">发明家</a></li>
+                        <li><a href="#quiz" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">知识测验</a></li>
+                        <li><a href="#future" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">未来展望</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">资源</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">参考文献</a></li>
+                        <li><a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">进一步阅读</a></li>
+                        <li><a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">教学资源</a></li>
+                        <li><a href="#" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">相关链接</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i class="fa fa-envelope text-primary"></i>
+                            <a href="mailto:info@computerevolution.com" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">info@computerevolution.com</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa fa-phone text-primary"></i>
+                            <a href="tel:+1234567890" class="text-light-text/70 dark:text-dark-text/70 hover:text-primary transition-colors duration-200">+123 456 7890</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa fa-map-marker text-primary"></i>
+                            <span class="text-light-text/70 dark:text-dark-text/70">科技博物馆，创新大道100号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-light-text/70 dark:text-dark-text/70">
+                    &copy; 2025 计算进化史 | 保留所有权利 | 由 <a href="#" class="text-primary hover:underline">科技教育团队</a> 制作
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 详情弹窗 -->
+    <div id="details-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div class="relative bg-light-card dark:bg-dark-card rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <button id="close-modal" class="absolute top-4 right-4 text-light-text/50 dark:text-dark-text/50 hover:text-light-text dark:hover:text-dark-text transition-colors duration-200">
+                <i class="fa fa-times text-xl"></i>
+            </button>
+            <div class="p-6 md:p-8">
+                <div id="modal-content">
+                    <!-- 内容将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 数据
+        const timelineData = {
+            abacus: {
+                title: "算盘",
+                year: "1623",
+                image: "https://picsum.photos/seed/abacus/800/600",
+                content: `
+                    <p class="mb-4">算盘是一种手动操作计算辅助工具形式。它起源于中国，迄今已有2600多年的历史，是中国古代的一项重要发明。在阿拉伯数字出现前，算盘是世界广为使用的计算工具。</p>
+                    <p class="mb-4">算盘的矩形木框内排列一串串等数目的算珠，中有一道横梁把珠统分为上下两部分，算珠内贯直柱，俗称"档"，一般为9档、11档或15档。档中横以梁，梁上两珠，每珠作数五，梁下五珠，每珠作数一，运算时定位后拨珠计算，可以做加减乘除等算法。</p>
+                    <p>随着算盘的使用，人们总结出许多计算口诀，使计算的速度更快了。这种用算盘计算的方法，叫珠算。在明代，珠算已相当普及，并且出版了不少有关珠算的书籍，其中流传至今，影响最大的是程大位(1533～1606)的《直指算法统宗》。</p>
+                `
+            },
+            difference_engine: {
+                title: "差分机",
+                year: "1822",
+                image: "https://picsum.photos/seed/differenceengine/800/600",
+                content: `
+                    <p class="mb-4">差分机是由英国数学家查尔斯·巴贝奇(Charles Babbage)在1822年设计的一种机械计算机。它的设计目的是通过差分方法计算多项式函数的值，特别是用于编制数学用表，如对数表和三角函数表。</p>
+                    <p class="mb-4">巴贝奇在1822年成功研制出了差分机的小型模型，可以计算3次多项式的值。这个模型证明了他的设计理念是可行的。然而，由于当时的制造技术限制和资金问题，巴贝奇未能完成他最初设计的大型差分机。</p>
+                    <p>差分机的设计是基于数学中的差分原理，即通过计算一系列差值来简化多项式的计算。差分机由一系列齿轮和轴组成，每个齿轮代表一个数字。通过机械联动，差分机可以自动完成复杂的计算过程，并将结果打印出来。</p>
+                    <p>尽管差分机没有完全实现，但它是计算机发展史上的一个重要里程碑。巴贝奇的设计思想为后来的计算机发展奠定了基础，他也因此被称为"计算机之父"。</p>
+                `
+            },
+            eniac: {
+                title: "ENIAC",
+                year: "1946",
+                image: "https://picsum.photos/seed/eniac/800/600",
+                content: `
+                    <p class="mb-4">ENIAC（电子数字积分计算机，Electronic Numerical Integrator and Computer）是世界上第一台通用电子计算机，由美国宾夕法尼亚大学的约翰·莫奇利(John Mauchly)和普雷斯伯·埃克特(J. Presper Eckert)领导的团队研制。它于1946年2月14日正式投入使用，标志着计算机时代的开端。</p>
+                    <p class="mb-4">ENIAC的主要任务是为美国陆军弹道研究实验室计算火炮射击表。它使用了大约18,000个电子管，占地约167平方米，重达30吨，功率消耗约150千瓦。尽管体积庞大，但ENIAC的计算速度比当时任何机电计算机都要快得多，每秒可以执行约5,000次加法运算。</p>
+                    <p>ENIAC的设计和制造是一项巨大的工程壮举。它的成功证明了电子计算机的可行性，并为后来的计算机发展铺平了道路。然而，ENIAC也有一些局限性，例如它的编程需要手动设置开关和插拔电缆，非常耗时且容易出错。</p>
+                    <p>尽管存在这些局限性，ENIAC的问世仍然是计算机发展史上的一个重要里程碑。它标志着计算机从机械时代迈入了电子时代，并为现代计算机科学和信息技术的发展奠定了基础。</p>
+                `
+            },
+            univac: {
+                title: "UNIVAC I",
+                year: "1951",
+                image: "https://picsum.photos/seed/univac/800/600",
+                content: `
+                    <p class="mb-4">UNIVAC I（通用自动计算机，Universal Automatic Computer）是美国第一台商业化的电子计算机，由约翰·莫奇利和普雷斯伯·埃克特领导的团队研制。它于1951年6月14日交付美国人口普查局使用，成为第一台投入商业运营的电子计算机。</p>
+                    <p class="mb-4">UNIVAC I的设计目标是处理大规模的数据处理任务，特别是人口普查和商业数据处理。它使用了大约5,200个电子管，占地约35平方米，功率消耗约125千瓦。尽管比ENIAC小得多，但UNIVAC I的计算速度更快，每秒可以执行约1,905次加法运算。</p>
+                    <p>UNIVAC I的一个重要特点是它能够处理字母和数字数据，这使得它非常适合商业应用。它还引入了许多创新技术，如磁鼓存储器和磁带驱动器，这些技术为后来的计算机发展奠定了基础。</p>
+                    <p>UNIVAC I的成功标志着计算机从实验室走向了商业应用。它的出现引发了一场数据处理革命，并为现代信息技术的发展铺平了道路。UNIVAC I的一些早期客户包括美国人口普查局、美国陆军和通用电气公司等。</p>
+                `
+            },
+            fortran: {
+                title: "FORTRAN编程语言",
+                year: "1957",
+                image: "https://picsum.photos/seed/fortran/800/600",
+                content: `
+                    <p class="mb-4">FORTRAN（公式翻译，Formula Translation）是世界上第一种广泛使用的高级程序设计语言，由IBM的约翰·巴克斯(John Backus)领导的团队开发。它于1957年首次发布，旨在简化科学和工程计算的编程工作。</p>
+                    <p class="mb-4">FORTRAN的设计理念是让科学家和工程师能够用类似于数学公式的语言编写程序，而不需要了解计算机底层的细节。这使得编程变得更加容易和高效，大大推动了科学计算的发展。</p>
+                    <p>FORTRAN的第一个版本支持基本的算术运算、条件语句和循环结构。随着时间的推移，FORTRAN不断发展和完善，推出了多个版本，如FORTRAN II、FORTRAN IV、FORTRAN 77和FORTRAN 90等。每个新版本都增加了新的功能和改进，使其更加强大和灵活。</p>
+                    <p>尽管FORTRAN已经有60多年的历史，但它仍然是科学和工程计算领域的主要编程语言之一。许多重要的科学计算软件和库，如LAPACK和BLAS，都是用FORTRAN编写的。FORTRAN的发展也为后来的编程语言，如C、C++和Python，奠定了基础。</p>
+                `
+            }
+        };
+        
+        const inventorsData = {
+            turing: {
+                name: "艾伦·图灵",
+                birth: "1912-1954",
+                image: "https://picsum.photos/seed/turing/800/600",
+                content: `
+                    <p class="mb-4">艾伦·图灵（Alan Turing，1912年6月23日－1954年6月7日）是英国数学家、逻辑学家、密码分析学家和计算机科学家，被广泛认为是计算机科学与人工智能之父。</p>
+                    <p class="mb-4">1936年，图灵发表了题为《论可计算数及其在判定问题中的应用》的论文，提出了"图灵机"的概念。图灵机是一种抽象的计算模型，它可以模拟任何算法的计算过程。这篇论文为现代计算机科学奠定了理论基础。</p>
+                    <p class="mb-4">二战期间，图灵在英国政府的密码学校布莱切利园工作，参与了破译纳粹德国的恩尼格玛密码机的工作。他的工作对盟军的胜利起到了重要作用，被认为缩短了战争时间。</p>
+                    <p class="mb-4">战后，图灵继续在计算机科学领域进行研究。他提出了"图灵测试"的概念，用于判断机器是否具有智能。他还参与了早期计算机的设计和开发工作。</p>
+                    <p>1952年，图灵因同性恋行为被英国政府起诉，并被迫接受化学阉割。1954年，图灵在家中自杀身亡，年仅41岁。直到2009年，英国政府才正式向图灵道歉。2013年，英国女王伊丽莎白二世宣布赦免图灵。</p>
+                `
+            },
+            vonneumann: {
+                name: "约翰·冯·诺依曼",
+                birth: "1903-1957",
+                image: "https://picsum.photos/seed/vonneumann/800/600",
+                content: `
+                    <p class="mb-4">约翰·冯·诺依曼（John von Neumann，1903年12月28日－1957年2月8日）是美籍匈牙利数学家、物理学家、计算机科学家和博弈论专家，被认为是20世纪最重要的数学家之一。</p>
+                    <p class="mb-4">冯·诺依曼在多个领域都做出了重要贡献。在数学方面，他对集合论、泛函分析、量子力学和博弈论等领域都有深入研究。在计算机科学方面，他提出了"存储程序"的概念，奠定了现代计算机体系结构的基础，被称为冯·诺依曼结构。</p>
+                    <p class="mb-4">1945年，冯·诺依曼发表了题为《关于EDVAC的报告草案》的论文，提出了存储程序计算机的概念。这个概念的核心是将程序和数据存储在同一个存储器中，使得计算机可以像处理数据一样处理程序。这一思想为现代计算机的设计和发展奠定了基础。</p>
+                    <p class="mb-4">冯·诺依曼还参与了早期计算机的设计和开发工作，包括ENIAC和EDVAC等项目。他的工作对计算机科学的发展产生了深远影响，被誉为"计算机之父"之一。</p>
+                    <p>除了计算机科学，冯·诺依曼还在博弈论、量子力学和经济学等领域做出了重要贡献。他的博弈论研究为经济学和社会科学提供了重要的分析工具，他的量子力学研究对现代物理学的发展产生了重要影响。</p>
+                `
+            },
+            hopper: {
+                name: "格蕾丝·霍普",
+                birth: "1906-1992",
+                image: "https://picsum.photos/seed/hopler/800/600",
+                content: `
+                    <p class="mb-4">格蕾丝·霍普（Grace Hopper，1906年12月9日－1992年1月1日）是美国海军少将、计算机科学家和数学家，被誉为"COBOL语言之母"和"计算机编程之母"。</p>
+                    <p class="mb-4">霍普在耶鲁大学获得数学博士学位后，加入了美国海军预备役。二战期间，她被分配到哈佛大学的计算实验室，参与了Mark I计算机的编程工作。Mark I是一台早期的机电计算机，由霍华德·艾肯设计。</p>
+                    <p class="mb-4">战后，霍普继续在计算机领域工作。她开发了第一个编译器A-0系统，这是一种将高级语言翻译成机器语言的程序。她的工作为后来的编程语言和软件开发奠定了基础。</p>
+                    <p class="mb-4">1959年，霍普参与了COBOL（面向商业的通用语言）编程语言的开发。COBOL是一种专门为商业应用设计的编程语言，它的设计目标是让非专业程序员也能编写程序。COBOL成为了商业领域最流行的编程语言之一，并一直使用至今。</p>
+                    <p>霍普的另一个重要贡献是推广了"debugging"这个术语。据说，在1947年，当她在Mark II计算机上工作时，发现一只蛾子卡在了继电器中，发现一只蛾子卡在了继电器中，导致计算机故障。她将蛾子取出并贴在了日志本上，戏称这是"debugging"（调试）。从此，"debugging"就成为了计算机领域的常用术语。</p>
+                    <p>霍普在计算机科学领域的贡献得到了广泛认可。她获得了许多荣誉和奖项，包括美国国家技术奖章和计算机先驱奖。1986年，她从海军退休时，成为了美国海军历史上服役时间最长的军官。</p>
+                `
+            }
+        };
+        
+        // 页面加载后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化算力增长图表
+            const ctx = document.getElementById('computingPowerChart').getContext('2d');
+            const computingPowerChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1940', '1950', '1960', '1970', '1980', '1990', '2000', '2010', '2020', '2025'],
+                    datasets: [{
+                        label: '每秒运算次数(对数尺度)',
+                        data: [1, 10, 1000, 10000, 1000000, 100000000, 10000000000, 1000000000000, 100000000000000, 1000000000000000],
+                        borderColor: '#165DFF',
+                        backgroundColor: 'rgba(22, 93, 255, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'logarithmic',
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toExponential();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `每秒运算次数: ${context.parsed.y.toExponential()} FLOPS`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 主题切换
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark');
+                
+                // 保存主题偏好
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // 检查用户之前的主题偏好
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            // 移动端菜单切换
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    // 关闭移动菜单（如果打开）
+                    mobileMenu.classList.add('hidden');
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 时间轴导航
+            const timelineNavBtns = document.querySelectorAll('.timeline-nav-btn');
+            timelineNavBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    timelineNavBtns.forEach(b => b.classList.remove('active', 'bg-primary', 'text-white', 'shadow-lg'));
+                    timelineNavBtns.forEach(b => b.classList.add('bg-light-card', 'dark:bg-dark-card', 'shadow-md'));
+                    
+                    // 添加当前按钮的active类
+                    this.classList.add('active', 'bg-primary', 'text-white', 'shadow-lg');
+                    this.classList.remove('bg-light-card', 'dark:bg-dark-card', 'shadow-md');
+                    
+                    // 显示对应年代的内容
+                    const era = this.getAttribute('data-era');
+                    document.querySelectorAll('.timeline-era').forEach(el => {
+                        el.classList.add('hidden');
+                    });
+                    document.getElementById(`${era}-era`).classList.remove('hidden');
+                });
+            });
+            
+            // 时间节点点击事件
+            const timelineDots = document.querySelectorAll('.timeline-dot');
+            const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
+            const modal = document.getElementById('details-modal');
+            const modalContent = document.getElementById('modal-content');
+            const closeModal = document.getElementById('close-modal');
+            
+            function openModal(id) {
+                const itemData = timelineData[id];
+                if (itemData) {
+                    modalContent.innerHTML = `
+                        <div class="space-y-6">
+                            <div class="relative h-64 overflow-hidden rounded-xl">
+                                <img src="${itemData.image}" alt="${itemData.title}" class="w-full h-full object-cover">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                                    <h3 class="text-2xl font-bold text-white">${itemData.title}</h3>
+                                    <p class="text-white/80">${itemData.year}</p>
+                                </div>
+                            </div>
+                            <div class="prose dark:prose-invert max-w-none">
+                                ${itemData.content}
+                            </div>
+                        </div>
+                    `;
+                    modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+            
+            timelineDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    openModal(id);
+                });
+            });
+            
+            viewDetailsBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    openModal(id);
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            
+            // 发明家详情
+            const inventorDetailsBtns = document.querySelectorAll('.inventor-details-btn');
+            
+            inventorDetailsBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const inventorData = inventorsData[id];
+                    
+                    if (inventorData) {
+                        modalContent.innerHTML = `
+                            <div class="space-y-6">
+                                <div class="relative h-64 overflow-hidden rounded-xl">
+                                    <img src="${inventorData.image}" alt="${inventorData.name}" class="w-full h-full object-cover">
+                                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                                        <h3 class="text-2xl font-bold text-white">${inventorData.name}</h3>
+                                        <p class="text-white/80">${inventorData.birth}</p>
+                                    </div>
+                                </div>
+                                <div class="prose dark:prose-invert max-w-none">
+                                    ${inventorData.content}
+                                </div>
+                            </div>
+                        `;
+                        modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+            
+            // 点击模态框背景关闭模态框
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // 知识测验
+            const quizForm = document.getElementById('feedback-form');
+            const submitQuizBtn = document.getElementById('submit-quiz');
+            const resetQuizBtn = document.getElementById('reset-quiz');
+            const quizQuestions = document.getElementById('quiz-questions');
+            const quizResults = document.getElementById('quiz-results');
+            const quizScore = document.getElementById('quiz-score');
+            
+            submitQuizBtn.addEventListener('click', function() {
+                // 计算得分
+                let score = 0;
+                
+                // 检查问题1
+                const q1Answer = document.querySelector('input[name="q1"]:checked');
+                if (q1Answer && q1Answer.value === 'A') {
+                    score++;
+                }
+                
+                // 检查问题2
+                const q2Answer = document.querySelector('input[name="q2"]:checked');
+                if (q2Answer && q2Answer.value === 'A') {
+                    score++;
+                }
+                
+                // 显示结果
+                quizScore.textContent = score;
+                quizQuestions.classList.add('hidden');
+                quizResults.classList.remove('hidden');
+            });
+            
+            resetQuizBtn.addEventListener('click', function() {
+                // 重置表单
+                document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false;
+                });
+                
+                // 隐藏结果，显示问题
+                quizResults.classList.add('hidden');
+                quizQuestions.classList.remove('hidden');
+            });
+            
+            // 反馈表单
+            const feedbackForm = document.getElementById('feedback-form');
+            
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 这里可以添加表单提交逻辑
+                alert('感谢您的反馈！我们已经收到您的消息。');
+                feedbackForm.reset();
+            });
+            
+            // 滚动动画
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.timeline-item, #inventors .bg-light-card, #interactive .bg-light-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('opacity-100', 'translate-y-0');
+                        element.classList.remove('opacity-0', 'translate-y-8');
+                    }
+                });
+            };
+            
+            // 初始设置
+            document.querySelectorAll('.timeline-item, #inventors .bg-light-card, #interactive .bg-light-card').forEach(element => {
+                element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
+            });
+            
+            // 滚动时触发动画
+            window.addEventListener('scroll', animateOnScroll);
+            
+            // 初始触发一次动画
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>
+    
